@@ -1,0 +1,31 @@
+plugins {
+    id "java"
+    id 'application'
+    id "edu.wpi.first.GradleRIO" version "2018.06.21"
+}
+
+mainClassName = "RecordTrajectory"
+
+run{
+    standardInput = System.in
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'http://first.wpi.edu/FRC/roborio/maven/release/'
+    }
+}
+
+dependencies {
+    compile wpilib()
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+}
+
+jar {
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.7'
+}
